@@ -2,6 +2,7 @@
 import connectDB from '@/lib/db';
 import Block, { IBlock } from '@/models/Block';
 import BlockCard from '@/app/components/bento/BlockCard';
+import BentoGrid from './components/bento/BentoGrid';
 
 // Hàm lấy dữ liệu (Chạy trên Server)
 async function getBlocks() {
@@ -9,7 +10,7 @@ async function getBlocks() {
   // Lấy hết block, sort theo order, chuyển sang plain object để tránh lỗi Next.js warning
 
   const blocks = await Block.find({ isVisible: true }).sort({ order: 1 }).lean();
-  
+
   // Dữ liệu FAKE để test giao diện
   // const blocks = [
   //   { _id: '1', title: 'Spotify', type: 'social', content: 'Đang nghe: Nhạc Lofi chill', size: 'small', color: 'bg-green-400' },
@@ -17,7 +18,7 @@ async function getBlocks() {
   //   { _id: '3', title: 'Github', type: 'social', content: 'Follow tui đi', size: 'small', color: 'bg-gray-200', link: 'https://github.com' },
   //   { _id: '4', title: 'About Me', type: 'note', content: 'Sinh viên IT, thích code dạo, ghét bug.', size: 'large', color: 'bg-yellow-400' },
   // ];
-  
+
   // Hack nhẹ: Chuyển _id và Date thành string để React không khóc thét
   return blocks.map((block: any) => ({
     ...block,
@@ -41,26 +42,13 @@ export default async function Home() {
         </p>
       </header>
 
-      {/* Đây là cái lưới BENTO GRID thần thánh */}
+      {/* Gọi Component BentoGrid và truyền data vào */}
       {blocks.length > 0 ? (
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[200px]">
-          {blocks.map((block: any) => (
-            <BlockCard
-              key={block._id}
-              title={block.title}
-              type={block.type}
-              content={block.content}
-              size={block.size}
-              color={block.color}
-              link={block.link}
-            />
-          ))}
-        </div>
+        <BentoGrid blocks={blocks} />
       ) : (
-        // Fallback khi chưa có data
         <div className="text-center py-20">
           <h2 className="text-2xl font-bold">Chưa có gì hết trơn á!</h2>
-          <p>Vào Database hoặc Admin thêm vài cục gạch đi ngài Zehel.</p>
+          <p>Vào Admin thêm vài cục gạch đi ngài Zehel.</p>
         </div>
       )}
 

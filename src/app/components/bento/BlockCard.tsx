@@ -10,7 +10,7 @@ interface BlockProps {
   content?: string;
   size: 'small' | 'medium' | 'large';
   color: string;
-  link?: string;
+  link: string | undefined | null; // Cho phép nhận null
   className?: string; // Để custom thêm nếu cần
 }
 
