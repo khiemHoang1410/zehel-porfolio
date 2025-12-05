@@ -138,6 +138,7 @@ export default function AdminPage() {
                 value={formData.type}
                 onChange={e => setFormData({...formData, type: e.target.value})}
               >
+                <option value="contact">Contact Form (Liên hệ)</option>
                 <option value="project">Project (Dự án)</option>
                 <option value="snippet">Snippet (Code)</option>
                 <option value="social">Social (MXH)</option>
