@@ -7,7 +7,16 @@ import BlockCard from '@/app/components/bento/BlockCard';
 async function getBlocks() {
   await connectDB();
   // Lấy hết block, sort theo order, chuyển sang plain object để tránh lỗi Next.js warning
+
   const blocks = await Block.find({ isVisible: true }).sort({ order: 1 }).lean();
+  
+  // Dữ liệu FAKE để test giao diện
+  // const blocks = [
+  //   { _id: '1', title: 'Spotify', type: 'social', content: 'Đang nghe: Nhạc Lofi chill', size: 'small', color: 'bg-green-400' },
+  //   { _id: '2', title: 'Project X', type: 'project', content: 'Web app quản lý người yêu cũ', size: 'medium', color: 'bg-purple-400' },
+  //   { _id: '3', title: 'Github', type: 'social', content: 'Follow tui đi', size: 'small', color: 'bg-gray-200', link: 'https://github.com' },
+  //   { _id: '4', title: 'About Me', type: 'note', content: 'Sinh viên IT, thích code dạo, ghét bug.', size: 'large', color: 'bg-yellow-400' },
+  // ];
   
   // Hack nhẹ: Chuyển _id và Date thành string để React không khóc thét
   return blocks.map((block: any) => ({
