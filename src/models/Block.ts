@@ -20,7 +20,7 @@ const BlockSchema = new Schema<IBlock>({
   type: { 
     type: String, 
     required: true, 
-    enum: ['project', 'snippet', 'social', 'note', 'status','contact'], 
+    enum: ['project', 'snippet', 'social', 'note', 'status'], 
     default: 'note' 
   },
   content: { type: String, default: '' },
