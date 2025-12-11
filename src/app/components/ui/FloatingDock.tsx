@@ -1,165 +1,163 @@
-// app/components/ui/FloatingDock.tsx
-'use client'; // Nhớ cái này vì có dùng hooks
+// src/app/components/ui/FloatingDock.tsx
+'use client';
 
 import React, { useRef, useState } from 'react';
-import { Home, Code2, User, Coffee, LayoutGrid, Settings, FolderGit2, BookOpen, FileText } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { Home, FlaskConical, User, Coffee } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import {
-    motion,
-    useMotionValue,
-    useSpring,
-    useTransform,
-    MotionValue,
-    AnimatePresence,
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  MotionValue,
+  AnimatePresence,
 } from 'framer-motion';
 
-interface DockProps {
-    currentFilter: string;
-    onFilterChange: (filter: string) => void;
-}
-
-// 1. Cấu hình độ nhạy của hiệu ứng
+// --- 1. CONFIG: Cấu hình độ nảy ở đây ---
 const CONFIG = {
-    baseWidth: 40,      // Kích thước cơ bản
-    hoverWidth: 80,     // Kích thước khi hover max
-    distance: 150,      // Khoảng cách ảnh hưởng (chuột càng gần càng to)
-    stiffness: 150,     // Độ cứng của lò xo (càng cao càng nảy)
-    damping: 15,        // Độ hãm (để không bị rung quá đà)
+  distance: 140, // Khoảng cách chuột bắt đầu ảnh hưởng
+  baseSize: 50,  // Kích thước bình thường
+  hoverSize: 90, // Kích thước khi hover max
+  stiffness: 150, // Độ cứng lò xo
+  damping: 15,    // Độ nảy
 };
 
+interface DockProps {
+  currentFilter?: string;
+  onFilterChange?: (filter: string) => void;
+}
+
 export default function FloatingDock({ currentFilter, onFilterChange }: DockProps) {
-    const router = useRouter();
+  const pathname = usePathname();
+  const router = useRouter();
 
-    // 2. Tạo một biến motion để theo dõi vị trí chuột trên trục X
-    const mouseX = useMotionValue(Infinity);
+  // 🔑 KEY: Phải có cái này để track chuột
+  const mouseX = useMotionValue(Infinity);
 
-    const menuItems = [
-        // 1. Home: Tổng quan
-        { id: 'home', icon: Home, label: 'Home' },
+  const menuItems = [
+    { id: 'home', icon: Home, label: 'Home', href: '/' },
+    { id: 'lab', icon: FlaskConical, label: 'The Lab', href: '/lab' },
+    // 👇 Update: Bỏ filter, gán href cứng
+    { id: 'note', icon: Coffee, label: 'Notes', href: '/note' },
+    { id: 'about', icon: User, label: 'About', href: '/about' },
+  ];
 
-        // 2. About: Ông là ai? (Thay icon User cũ ở social qua đây)
-        { id: 'about', icon: User, label: 'About Me' },
+  return (
+    <div
+      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex h-24 items-end gap-4 px-4 pb-3"
+      onMouseMove={(e) => mouseX.set(e.pageX)} // 👈 Bắt buộc: Cập nhật vị trí chuột
+      onMouseLeave={() => mouseX.set(Infinity)} // 👈 Bắt buộc: Reset khi chuột ra ngoài
+    >
+      {/* Container nền trắng viền đen */}
+      <div className="mx-auto flex h-fit gap-3 rounded-2xl bg-white/90 backdrop-blur-md border-4 border-black p-3 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] items-end transition-all hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+        {menuItems.map((item) => {
+          // Logic Active
+          const isActive = pathname === item.href;
 
-        // 3. Projects: Sản phẩm
-        { id: 'project', icon: FolderGit2, label: 'Projects' },
-
-        // 4. Snippets: Kỹ năng code
-        { id: 'snippet', icon: Code2, label: 'Code Snippets' },
-
-        // 5. Notes: Viết lách (đổi icon Book nhìn tri thức hơn Coffee :v)
-        { id: 'note', icon: BookOpen, label: 'Notes' },
-
-        // 6. CV/Resume: "Tuyển em đi" (Quan trọng!)
-        // Lưu ý: ID này có thể cần xử lý riêng để mở file PDF
-        { id: 'resume', icon: FileText, label: 'Resume' },
-        // { id: 'admin', icon: Settings, label: 'Admin Area' },
-    ];
-
-
-    const handleClick = (id: string) => {
-        if (id === 'resume') {
-            // Mở CV ở tab mới
-            window.open('/path-to-your-cv.pdf', '_blank');
-        } else if (id === 'admin') {
-            // Logic ẩn (nếu ông vẫn muốn giữ nút admin nhưng chỉ hiện khi dev)
-            // process.env.NODE_ENV === 'development' ? router.push('/admin') : null
-        } else {
-            onFilterChange(id);
-        }
-    };
-    return (
-        <div
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex h-16 items-end gap-4 rounded-full px-4 pb-3"
-            // Khi chuột di vào vùng Dock, cập nhật vị trí chuột
-            onMouseMove={(e) => mouseX.set(e.pageX)}
-            // Khi chuột rời đi, reset về vô cực (để không icon nào bị to lên)
-            onMouseLeave={() => mouseX.set(Infinity)}
-        >
-            {/* Container chính style Neo-brutalism */}
-            <div className="mx-auto flex h-fit gap-4 rounded-full bg-white border-4 border-black p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] items-end">
-                {menuItems.map((item) => (
-                    <DockIcon
-                        key={item.id}
-                        mouseX={mouseX}
-                        {...item}
-                        isActive={currentFilter === item.id}
-                        onClick={() => handleClick(item.id)}
-                    />
-                ))}
-            </div>
-        </div>
-    );
+          return (
+            <DockIcon
+              key={item.id}
+              mouseX={mouseX}
+              {...item}
+              isActive={isActive || false}
+              // 👇 Logic Click xử lý riêng cho Note
+              onClick={() => {
+                if (item.id === 'note') {
+                  if (pathname !== '/') {
+                    window.location.href = '/?filter=note';
+                  } else {
+                    onFilterChange?.('note');
+                  }
+                }
+              }
+              }
+            />
+          )
+        })}
+      </div>
+    </div>
+  );
 }
 
-// --- Sub Component: Xử lý logic từng icon ---
+// --- 2. SUB COMPONENT: QUAN TRỌNG NHẤT ---
+// Đây là nơi phép thuật xảy ra (Kết hợp Animation + Link)
+
 interface IconProps {
-    mouseX: MotionValue;
-    id: string;
-    icon: React.ElementType;
-    label: string;
-    isActive: boolean;
-    onClick: () => void;
+  mouseX: MotionValue;
+  id: string;
+  icon: React.ElementType;
+  label: string;
+  href: string | null;
+  isActive: boolean;
+  onClick?: () => void;
 }
 
-function DockIcon({ mouseX, icon: Icon, label, isActive, onClick }: IconProps) {
-  const ref = useRef<HTMLButtonElement>(null);
+function DockIcon({ mouseX, icon: Icon, label, href, isActive, onClick }: IconProps) {
+  const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setHovered] = useState(false);
 
+  // --- Logic Toán học cho hiệu ứng phóng to ---
   const distance = useTransform(mouseX, (val) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
     return val - bounds.x - bounds.width / 2;
   });
 
-  // 1. Logic chiều cao (giữ nguyên độ nảy)
-  const heightSync = useTransform(distance, [-120, 0, 120], [45, 65, 45]);
-  const height = useSpring(heightSync, { mass: 0.1, stiffness: 150, damping: 12 });
-  
-  // Icon scale
-  const iconSize = useTransform(height, [45, 65], [20, 26]);
+  const widthSync = useTransform(distance, [-CONFIG.distance, 0, CONFIG.distance], [CONFIG.baseSize, CONFIG.hoverSize, CONFIG.baseSize]);
+  const width = useSpring(widthSync, { mass: 0.1, stiffness: CONFIG.stiffness, damping: CONFIG.damping });
+
+  // --- Logic Render nội dung bên trong ---
+  // Dù là Link hay Button thì giao diện bên trong giống hệt nhau
+  const InnerContent = (
+    <>
+      <div className="relative z-10 flex items-center justify-center w-full h-full">
+        <Icon className={`w-1/2 h-1/2 transition-colors duration-200 ${isActive ? 'text-white' : 'text-gray-600 group-hover:text-black'}`} />
+      </div>
+
+      {/* Label hiện ra khi hover */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: 2, x: "-50%" }}
+            className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-black px-2 py-1 text-xs font-bold text-white border-2 border-transparent shadow-lg z-20"
+          >
+            {label}
+            {/* Mũi tên nhỏ trỏ xuống */}
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-black rotate-45"></div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 
   return (
-    <motion.button
+    <motion.div
       ref={ref}
-      // ⚠️ QUAN TRỌNG: Đã BỎ prop 'layout' để tránh giật
-      style={{ height }} 
-      onClick={onClick}
+      style={{ width, height: width }} // Hình vuông, width = height = biến đổi theo chuột
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`
-        relative flex items-center justify-center rounded-full transition-colors border
-        ${isActive 
-          ? 'bg-zinc-900 text-white border-zinc-900 dark:bg-white dark:text-black' 
-          : 'bg-zinc-50 text-zinc-500 border-transparent hover:bg-zinc-100 hover:border-zinc-200'}
-        ${isHovered ? 'px-3' : 'aspect-square'} 
+        group relative flex aspect-square items-center justify-center rounded-xl border-2 cursor-pointer
+        ${isActive
+          ? 'bg-black border-black shadow-none' // Active: Đen ngầu
+          : 'bg-transparent border-transparent hover:bg-gray-100 hover:border-gray-200'} // Inactive: Trong suốt
       `}
     >
-      <motion.div 
-        style={{ width: iconSize, height: iconSize }}
-        className="flex items-center justify-center shrink-0"
-      >
-        <Icon className="w-full h-full" />
-      </motion.div>
-
-      {/* 2. Text Wrapper: Luôn render, chỉ animate width */}
-      <motion.div
-        initial={{ width: 0, opacity: 0 }}
-        animate={{ 
-          width: isHovered ? "auto" : 0, 
-          opacity: isHovered ? 1 : 0 
-        }}
-        transition={{ 
-          // Dùng tween (chuyển động đều) thay vì spring để không bị rung
-          type: "tween", 
-          ease: "easeOut", 
-          duration: 0.2 
-        }}
-        className="overflow-hidden whitespace-nowrap flex items-center"
-      >
-        {/* Padding nằm trong span để khi width=0 nó không bị lòi padding ra */}
-        <span className="pl-2 text-sm font-medium">
-          {label}
-        </span>
-      </motion.div>
-    </motion.button>
+      {/* 👇 ĐOẠN NÀY LÀ CHỖ FIX LOGIC CLICK: 
+         Nếu có href -> Dùng Link bọc lấy nội dung
+         Nếu không -> Dùng div thường + onClick
+      */}
+      {href ? (
+        <Link href={href} className="flex items-center justify-center w-full h-full">
+          {InnerContent}
+        </Link>
+      ) : (
+        <div onClick={onClick} className="flex items-center justify-center w-full h-full">
+          {InnerContent}
+        </div>
+      )}
+    </motion.div>
   );
 }
