@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import BlockCard from './BlockCard';
-import BlockModal from '../ui/BlockModal';
-import FloatingDock from '../ui/FloatingDock';
+import BlockModal from '../../../../shared/components/ui/BlockModal';
+import FloatingDock from '../../../../shared/components/ui/FloatingDock';
 import { BlockType } from '@/types';
 
 const BentoGrid = ({ blocks }: { blocks: BlockType[] }) => {

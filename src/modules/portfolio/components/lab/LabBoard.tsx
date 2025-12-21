@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code2, Fingerprint, Layers, Terminal, ArrowUpRight, FolderOpen, AlertCircle } from 'lucide-react';
-import BlockModal from '../ui/BlockModal';
+import BlockModal from '../../../../shared/components/ui/BlockModal';
 
 export default function LabBoard({ blocks }: { blocks: any[] }) {
   const [activeTab, setActiveTab] = useState<'all' | 'project' | 'snippet'>('all');

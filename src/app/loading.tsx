@@ -2,7 +2,7 @@
 'use client';
 
 import React from 'react';
-import LoaderVisual from '@/app/components/ui/LoaderVisual'; // Import component xịn
+import LoaderVisual from '@/shared/components/ui/LoaderVisual'; // Import component xịn
 
 export default function Loading() {
   return (

@@ -1,7 +1,7 @@
 // app/api/messages/route.ts
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Message from '@/models/Message';
+import connectDB from '@/shared/lib/db';
+import Message from '@/modules/core/models/Message';
 
 export async function POST(req: Request) {
   try {

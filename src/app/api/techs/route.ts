@@ -1,7 +1,7 @@
 // src/app/api/techs/route.ts
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Tech from '@/models/Tech';
+import connectDB from '@/shared/lib/db';
+import Tech from '@/modules/core/models/Tech';
 
 export async function GET() {
   await connectDB();

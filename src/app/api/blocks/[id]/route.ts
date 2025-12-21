@@ -1,7 +1,7 @@
 // app/api/blocks/[id]/route.ts
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Block from '@/models/Block';
+import connectDB from '@/shared/lib/db';
+import Block from '@/modules/core/models/Block';
 
 // Kiểu dữ liệu cho params trong Next.js 15 phải là Promise
 type Props = {

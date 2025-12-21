@@ -174,12 +174,13 @@ export default function AdminPage() {
                         </button>
                         <button
                             onClick={() => setActiveTab('techs')}
-                            className={`p-3 px-6 font-bold flex gap-2 ${activeTab === 'messages' ? 'bg-black text-white' : 'hover:bg-gray-200'}`}
-                        > <Cpu size={20} /> Tech Stack
+                            className={`p-3 px-6 font-bold flex gap-2 ${activeTab === 'techs' ? 'bg-black text-white' : 'hover:bg-gray-200'}`}
+                        >
+                            <Cpu size={20} /> Tech Stack
                         </button>
                         <button
                             onClick={() => setActiveTab('exp')}
-                            className={`p-3 px-6 font-bold flex gap-2 transition-colors ${activeTab === 'exp' ? 'bg-black text-white' : 'hover:bg-gray-200'}`}
+                            className={`p-3 px-6 font-bold flex gap-2  ${activeTab === 'exp' ? 'bg-black text-white' : 'hover:bg-gray-200'}`}
                         >
                             <Briefcase size={20} /> Kinh Nghiệm
                         </button>
@@ -352,6 +353,8 @@ export default function AdminPage() {
                         </div>
                     </div>
                 )}
+
+                {/* --- TAB 4: QUẢN LÝ KINH NGHIỆP --- */}
                 {activeTab === 'exp' && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] h-fit">

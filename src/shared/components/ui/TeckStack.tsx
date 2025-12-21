@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { getIconComponent } from '@/lib/iconMap';
+import { getIconComponent } from '@/shared/lib/iconMap';
 
 // Định nghĩa kiểu dữ liệu nhận vào
 type TechItem = {

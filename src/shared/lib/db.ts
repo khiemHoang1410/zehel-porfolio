@@ -1,21 +1,17 @@
-// lib/db.ts
 import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error(
-    'Lỗi rồi ngài Zehel ơi: Chưa khai báo MONGODB_URI trong file .env.local'
-  );
+  throw new Error('❌ Thiếu MONGODB_URI trong file .env.local rồi boss ơi!');
 }
 
-// Cái trò này để cache connection, tránh việc mỗi lần reload trang nó lại kết nối lại -> sập DB
+// Cache connection để tránh sập DB khi hot-reload
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
 }
 
-// Khai báo global để TypeScript không la làng
 declare global {
   var mongoose: MongooseCache;
 }
@@ -27,17 +23,13 @@ if (!cached) {
 }
 
 async function connectDB() {
-  if (cached.conn) {
-    return cached.conn;
-  }
+  if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    const opts = {
+    cached.promise = mongoose.connect(MONGODB_URI!, {
       bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
-      console.log('✅ Đã kết nối MongoDB ngon lành!');
+    }).then((mongoose) => {
+      console.log('✅ MongoDB connected successfully!');
       return mongoose;
     });
   }

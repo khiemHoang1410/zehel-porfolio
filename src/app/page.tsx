@@ -1,13 +1,13 @@
 // app/page.tsx
-import connectDB from '@/lib/db';
-import Block from '@/models/Block';
-import BlockCard from '@/app/components/bento/BlockCard';
-import BentoGrid from './components/bento/BentoGrid';
-import TeckStack from './components/ui/TeckStack';
-import PageTransition from './components/ui/PageTransition';
-import Marquee from './components/ui/Marquee'; // Import cái mới làm
+import connectDB from '@/shared/lib/db';
+import Block from '@/modules/core/models/Block';
+import BlockCard from '@/modules/portfolio/components/bento/BlockCard';
+import BentoGrid from '../modules/portfolio/components/bento/BentoGrid';
+import TeckStack from '../shared/components/ui/TeckStack';
+import PageTransition from '../shared/components/ui/PageTransition';
+import Marquee from '../shared/components/ui/Marquee'; // Import cái mới làm
 import { ArrowRight, Terminal, Zap } from 'lucide-react';
-import Tech from '@/models/Tech';
+import Tech from '@/modules/core/models/Tech';
 
 // --- PHẦN FETCH DATA GIỮ NGUYÊN ---
 async function getBlocks() {

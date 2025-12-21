@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Experience from '@/models/Experience';
+import connectDB from '@/shared/lib/db';
+import Experience from '@/modules/core/models/Experience';
 
 // GET: Lấy danh sách (Sắp xếp mới nhất lên đầu)
 export async function GET() {

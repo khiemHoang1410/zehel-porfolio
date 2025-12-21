@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 // Import cái Wrapper mình vừa tạo chứ không import trực tiếp FloatingDock
-import DockWrapper from "@/app/components/ui/DockWrapper"; 
-import ContactButton from "@/app/components/ui/ContactButton";
+import DockWrapper from "@/shared/components/ui/DockWrapper"; 
+import ContactButton from "@/shared/components/ui/ContactButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

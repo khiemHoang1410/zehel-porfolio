@@ -1,7 +1,7 @@
 // app/api/blocks/route.ts
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Block from '@/models/Block';
+import connectDB from '@/shared/lib/db';
+import Block from '@/modules/core/models/Block';
 
 // 1. Method GET: Lấy danh sách Blocks về để hiển thị
 export async function GET() {
