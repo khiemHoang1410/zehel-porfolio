@@ -26,8 +26,8 @@ export default function TechStack({ techs }: { techs: TechItem[] }) {
       <div className="flex w-full max-w-4xl items-center overflow-hidden rounded-full border-2 border-black/5 bg-white/30 backdrop-blur-md py-3 shadow-[0_8px_32px_rgba(0,0,0,0.05)] relative">
         
         {/* Mask Gradient */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white/80 to-transparent z-10"></div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white/80 to-transparent z-10"></div>
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-linear-to-r from-white/80 to-transparent z-10"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-linear-to-l from-white/80 to-transparent z-10"></div>
 
         <motion.div
           className="flex min-w-full shrink-0 items-center gap-12 px-4"

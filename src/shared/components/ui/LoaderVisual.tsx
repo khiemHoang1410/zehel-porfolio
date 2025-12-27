@@ -17,7 +17,7 @@ export default function LoaderVisual({ targetProgress, duration, onComplete }: L
       // 👇 SỬA Ở ĐÂY:
       // - Thay 'inset-0' (bị ảnh hưởng bởi thanh cuộn)
       // - Bằng 'top-0 left-0 w-screen h-screen' (luôn full màn hình vật lý, đè lên cả thanh cuộn)
-      className="fixed top-0 left-0 w-screen h-screen z-[9999] flex flex-col items-center justify-center bg-[#f0f0f0] text-black overflow-hidden"
+      className="fixed top-0 left-0 w-screen h-screen z-9999 flex flex-col items-center justify-center bg-[#f0f0f0] text-black overflow-hidden"
     >
       
       {/* 1. ANIMATION CON VẬT */}
@@ -38,7 +38,7 @@ export default function LoaderVisual({ targetProgress, duration, onComplete }: L
       {/* 2. THANH LOADING */}
       <div className="w-72 h-8 border-4 border-black bg-white rounded-xl p-1 relative overflow-hidden shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
         <motion.div 
-          className="h-full rounded-md bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+          className="h-full rounded-md bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500"
           initial={{ width: targetProgress === 100 ? "95%" : "0%" }}
           animate={{ width: `${targetProgress}%` }}
           transition={{ duration: duration, ease: "circOut" }}

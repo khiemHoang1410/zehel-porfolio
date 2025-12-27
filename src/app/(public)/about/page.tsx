@@ -2,9 +2,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
-import FloatingDock from '../../shared/components/ui/FloatingDock';
-import Timeline from '../../shared/components/ui/Timeline';
-import PageTransition from '../../shared/components/ui/PageTransition';
+import FloatingDock from '../../../shared/components/ui/FloatingDock';
+import Timeline from '../../../shared/components/ui/Timeline';
+import PageTransition from '../../../shared/components/ui/PageTransition';
 
 export default function AboutPage() {
   return (
@@ -48,7 +48,7 @@ export default function AboutPage() {
             {/* Cột phải: Ảnh chân dung (Placeholder nghệ thuật) */}
             <div className="relative group">
               <div className="absolute inset-0 bg-black translate-x-3 translate-y-3 rounded-2xl"></div>
-              <div className="relative bg-white border-4 border-black rounded-2xl overflow-hidden aspect-[3/4] flex items-center justify-center group-hover:-translate-y-1 group-hover:-translate-x-1 transition-transform duration-300">
+              <div className="relative bg-white border-4 border-black rounded-2xl overflow-hidden aspect-3/4 flex items-center justify-center group-hover:-translate-y-1 group-hover:-translate-x-1 transition-transform duration-300">
                 {/* Thay src bằng ảnh thật của ngài sau này */}
                 <Image
                   src="/globe.svg"

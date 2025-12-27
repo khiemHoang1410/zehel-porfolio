@@ -2,27 +2,28 @@ import type { NextAuthConfig } from 'next-auth';
 
 export const authConfig = {
   pages: {
-    signIn: '/login', // Nếu chưa login thì đá về đây
+    signIn: '/login', 
   },
-  // src/auth.config.ts
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnAdmin = nextUrl.pathname.startsWith('/admin');
+      const isOnLoginPage = nextUrl.pathname.startsWith('/login');
 
+      // 1. Kiểm tra quyền truy cập vào Admin
       if (isOnAdmin) {
-        if (isLoggedIn) return true; // Có user -> Cho vào Admin
-        return false; // Không user -> Bị đẩy về Login (tự kèm callbackUrl)
+        if (isLoggedIn) return true;
+        return false; // Tự động chuyển hướng về /login
       }
 
-      // Nếu đã login rồi mà vẫn ở trang Login -> Đẩy sang Admin ngay
-      if (isLoggedIn && nextUrl.pathname.startsWith('/login')) {
+      // 2. Nếu đã login, không cho quay lại trang Login nữa
+      if (isLoggedIn && isOnLoginPage) {
         return Response.redirect(new URL('/admin', nextUrl));
       }
 
+      // 3. Các trang khác (Home, About, Projects) cho phép truy cập tự do
       return true;
     },
   },
-
-  providers: [], // Để trống ở đây để Middleware chạy nhẹ nhàng
+  providers: [], 
 } satisfies NextAuthConfig;

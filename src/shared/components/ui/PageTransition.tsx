@@ -16,7 +16,7 @@ export default function PageTransition({ children }: { children: React.ReactNode
         {!isFinished && (
           <motion.div
             key="loader"
-            className="fixed inset-0 z-[100]"
+            className="fixed inset-0 z-100"
             exit={{ opacity: 0 }} // Fade out nhẹ khi xong
             transition={{ duration: 0.5 }}
           >

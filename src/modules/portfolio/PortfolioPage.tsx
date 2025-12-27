@@ -23,13 +23,13 @@ export default function PortfolioPage({ data }: PortfolioProps) {
                 <section className="relative pt-20 pb-12 px-4 md:px-8 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     {/* Cột trái: Text */}
                     <div className="space-y-6">
-                        <div className="inline-block bg-yellow-300 border-2 border-black px-3 py-1 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rotate-[-2deg]">
+                        <div className="inline-block bg-yellow-300 border-2 border-black px-3 py-1 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -rotate-2">
                             👋 Hi, I'm Zehel
                         </div>
 
                         <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9]">
                             Code Like A <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Madness</span>
+                            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-pink-600">Madness</span>
                         </h1>
 
                         <p className="text-lg md:text-xl font-medium text-gray-700 max-w-md border-l-4 border-black pl-4">
