@@ -1,7 +1,7 @@
 import connectDB from '@/shared/lib/db';
 import Block from '@/modules/core/models/Block';
 import { Eye, EyeOff } from 'lucide-react';
-import DeleteButton from './DeleteButton'; // Import từ file trên
+import DeleteButton from '../DeleteButton'; // Import từ file trên
 
 export async function ProjectList() {
   await connectDB();

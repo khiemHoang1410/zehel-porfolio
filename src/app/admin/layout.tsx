@@ -1,29 +1,25 @@
-// src/app/admin/layout.tsx
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import Link from "next/link";
-// ... import các icon
+// 👇 Import từ MODULES thay vì _components
+import AdminSidebar from "@/modules/admin/components/layout/side_bar/AdminSidebar";
+import AdminHeader from "@/modules/admin/components/layout/side_bar/AdminHeader";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  // Check auth lần nữa cho chắc (dù Middleware đã check)
   const session = await auth();
   if (!session) redirect("/login");
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar đơn giản */}
-      <aside className="w-64 bg-black text-white p-6 hidden md:block">
-         <div className="font-black text-2xl mb-8 text-yellow-400">ZEHEL.ADMIN</div>
-         <nav className="space-y-4">
-            <Link href="/admin" className="block hover:text-yellow-300">Dashboard</Link>
-            <Link href="/" target="_blank" className="block text-gray-500 hover:text-white">Xem Web</Link>
-         </nav>
-      </aside>
+    <div className="min-h-screen bg-gray-100 font-mono">
+      {/* Sidebar */}
+      <AdminSidebar />
 
-      {/* Nội dung chính */}
-      <main className="flex-1">
-        {children}
-      </main>
+      {/* Content Wrapper */}
+      <div className="flex flex-col md:ml-64 min-h-screen transition-all duration-300">
+        <AdminHeader />
+        <main className="flex-1 p-4 md:p-8 overflow-x-hidden">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

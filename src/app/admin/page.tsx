@@ -1,7 +1,7 @@
 import connectDB from '@/shared/lib/db';
 
 // import Experience from '@/models/Experience';
-import AdminDashboard from '@/modules/admin/components/AdminDashboard';
+import AdminDashboard from '@/modules/admin/components/dashboard/AdminDashboard';
 import Message from '@/modules/core/models/Message';
 import Tech from '@/modules/core/models/Tech';
 

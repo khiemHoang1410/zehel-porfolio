@@ -2,8 +2,8 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CreateBlockSchema, CreateBlockDTO } from '../dtos'; // Import từ cùng module
-import { createBlockAction } from '../actions';
+import { CreateBlockSchema, CreateBlockDTO } from '../../dtos'; // Import từ cùng module
+import { createBlockAction } from '../../actions';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { Loader2, Save } from 'lucide-react';

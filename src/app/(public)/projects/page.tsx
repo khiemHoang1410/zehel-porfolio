@@ -1,5 +1,5 @@
-import ProjectForm from '@/modules/admin/components/ProjectForm';
-import { ProjectList } from '@/modules/admin/components/ProjectList';
+import ProjectForm from '@/modules/admin/components/projects/ProjectForm';
+import { ProjectList } from '@/modules/admin/components/projects/ProjectList';
 
 export default function AdminProjectsPage() {
   return (
