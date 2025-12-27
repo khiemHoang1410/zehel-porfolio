@@ -1,10 +1,7 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// Import cái Wrapper mình vừa tạo chứ không import trực tiếp FloatingDock
-import DockWrapper from "@/shared/components/ui/DockWrapper"; 
-import ContactButton from "@/shared/components/ui/ContactButton";
+import { Toaster } from "sonner"; // Nhớ cài: npm i sonner
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,16 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Phần nội dung trang web */}
         {children}
-        
-        {/* Các thành phần cố định (Fixed UI) */}
-        <ContactButton />
-        
-        {/* Dock Navigation - Luôn nổi ở dưới cùng */}
-        <DockWrapper />
+        {/* Nơi hiển thị thông báo toast cho toàn app */}
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
