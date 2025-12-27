@@ -20,12 +20,12 @@ export default function LoginForm() {
             <motion.div
                 animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-10 -right-10 w-24 h-24 bg-yellow-400 rounded-full border-4 border-black -z-0"
+                className="absolute -top-10 -right-10 w-24 h-24 bg-yellow-400 rounded-full border-4 border-black z-0"
             />
             <motion.div
                 animate={{ x: [0, 10, 0], rotate: [12, -12, 12] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-5 -left-5 w-16 h-16 bg-purple-400 border-4 border-black -z-0"
+                className="absolute -bottom-5 -left-5 w-16 h-16 bg-purple-400 border-4 border-black z-0"
             />
 
             <div className="text-center mb-8 relative z-10">
@@ -108,7 +108,7 @@ function SubmitButton() {
     return (
         <div className="relative mt-4 group">
             {/* Lớp bóng phía dưới - Hình chữ nhật thứ 1 */}
-            <div className="absolute inset-0 bg-black translate-x-[6px] translate-y-[6px]" />
+            <div className="absolute inset-0 bg-black translate-x-1.5 translate-y-1.5" />
 
             {/* Cái nút thực tế - Hình chữ nhật thứ 2 */}
             <motion.button
@@ -118,7 +118,7 @@ function SubmitButton() {
                 type="submit"
                 style={{ x: 0, y: 0 }} // Trạng thái mặc định
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="relative w-full bg-white text-black border-4 border-black font-black py-4 flex justify-center items-center gap-2 disabled:opacity-50 overflow-hidden active:translate-x-[6px] active:translate-y-[6px] hover:translate-x-[6px] hover:translate-y-[6px] transition-all"
+                className="relative w-full bg-white text-black border-4 border-black font-black py-4 flex justify-center items-center gap-2 disabled:opacity-50 overflow-hidden active:translate-x-1.5 active:translate-y-1.5 hover:translate-x-1.5 hover:translate-y-1.5 transition-all"
             >
                 {pending ? (
                     <Loader2 className="animate-spin" />
