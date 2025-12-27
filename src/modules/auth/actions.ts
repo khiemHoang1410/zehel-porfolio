@@ -3,9 +3,11 @@
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 
+/**
+ * Xử lý đăng nhập
+ */
 export async function authenticate(prevState: string | undefined, formData: FormData) {
   try {
-    // Ép kiểu 'credentials' rõ ràng
     await signIn('credentials', Object.fromEntries(formData));
   } catch (error) {
     if (error instanceof AuthError) {
@@ -18,12 +20,7 @@ export async function authenticate(prevState: string | undefined, formData: Form
           return 'Đã xảy ra lỗi không xác định.';
       }
     }
-    // QUAN TRỌNG: Phải throw error ở đây. 
-    // Next.js dùng error này để thực hiện lệnh chuyển hướng (Redirect).
+    // QUAN TRỌNG: Phải throw error để Next.js xử lý lệnh redirect sau khi signIn thành công
     throw error;
   }
-}
-// 👇 Thêm hàm này
-export async function logoutAction() {
-  await signOut({ redirectTo: '/login' });
 }

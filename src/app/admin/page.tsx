@@ -8,6 +8,8 @@ import Tech from '@/modules/core/models/Tech';
 // Helper để serialize data (tránh lỗi object ID của Mongoose)
 const serialize = (data: any[]) => JSON.parse(JSON.stringify(data));
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminPage() {
     await connectDB();
 
