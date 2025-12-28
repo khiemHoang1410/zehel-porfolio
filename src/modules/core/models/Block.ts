@@ -1,37 +1,42 @@
 // models/Block.ts
 import mongoose, { Schema, Document } from 'mongoose';
+import { BlockSize, BlockType } from '../dtos/block.dto';
 
 // Định nghĩa kiểu dữ liệu cho TypeScript (để code nó gợi ý cho sướng)
-export interface IBlock extends Document {
+export interface IBlock {
+  id: string;          // ID của MongoDB luôn là string
   title: string;
-  type: 'project' | 'snippet' | 'social' | 'note' | 'status';
-  content?: string; // Nội dung Markdown hoặc Text ngắn
-  link?: string;    // Link bấm vào (Github, Demo, FB...)
-  imageUrl?: string; // Link ảnh cover (cho nhẹ DB)
-  size: 'small' | 'medium' | 'large'; // Kích thước ô
-  color: string;    // Màu nền (lưu class Tailwind, ví dụ: 'bg-yellow-400')
-  order: number;    // Số để sắp xếp vị trí
-  isVisible: boolean; // Ẩn/Hiện
-  createdAt: Date;
+  content?: string;     // Dấu ? nghĩa là có thể không có
+  type: BlockType;
+  size: BlockSize;
+  link?: string;
+  imageUrl?: string;
+  color?: string;
+  isVisible: boolean;
+  order: number;        // Để sắp xếp vị trí
+
+  // Khi qua Next.js Server Component -> Client, Date thường bị biến thành string
+  createdAt: string | Date;
+  updatedAt: string | Date;
 }
 
 const BlockSchema = new Schema<IBlock>({
   title: { type: String, required: true },
-  type: { 
-    type: String, 
-    required: true, 
-    enum: ['project', 'snippet', 'social', 'note', 'status'], 
-    default: 'note' 
+  type: {
+    type: String,
+    required: true,
+    enum: ['project', 'snippet', 'social', 'note', 'status'],
+    default: 'note'
   },
   content: { type: String, default: '' },
   link: { type: String, default: '' },
   imageUrl: { type: String, default: '' },
-  size: { 
-    type: String, 
-    enum: ['small', 'medium', 'large'], 
-    default: 'small' 
+  size: {
+    type: String,
+    enum: ['small', 'medium', 'large'],
+    default: 'small'
   },
-  color: { type: String, default: 'bg-white' }, 
+  color: { type: String, default: 'bg-white' },
   order: { type: Number, default: 0 },
   isVisible: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },

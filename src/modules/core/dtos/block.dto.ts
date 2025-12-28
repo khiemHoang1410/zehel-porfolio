@@ -53,3 +53,4 @@ export const UpdateBlockOrderSchema = z.array(
 export type CreateBlockDTO = z.infer<typeof CreateBlockSchema>;
 export type BlockDTO = z.infer<typeof BlockSchema>; // Dùng cái này cho React Component Props
 export type BlockType = z.infer<typeof BlockTypeEnum>; // Dùng cho biến check type
+export type BlockSize = z.infer<typeof BlockSizeEnum>; // Dùng cho biến check type

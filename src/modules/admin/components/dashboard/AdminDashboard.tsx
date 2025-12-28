@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { Layout, Mail, Cpu, Briefcase } from 'lucide-react';
 import ProjectForm from '../projects/ProjectForm';
-import { ProjectList } from '../projects/ProjectList'; // Lưu ý: ProjectList cần sửa lại thành Client Component hoặc accept props nếu muốn pass data từ đây
 import TechsManager from '../TechsManager';
 import InboxManager from '../InboxManager';
 // import ExperiencesManager from './ExperiencesManager'; (Ngài tự tạo file này tương tự TechsManager nhé)
