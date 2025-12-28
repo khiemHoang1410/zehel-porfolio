@@ -6,7 +6,6 @@ import AdminHeader from "@/modules/admin/components/layout/side_bar/AdminHeader"
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   try {
-    console.log("🔍 AdminLayout: Bắt đầu check Auth...");
     const session = await auth();
     console.log("🔍 AdminLayout: Kết quả session ->", session?.user?.email || "Không có session");
 
@@ -16,14 +15,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     }
   } catch (error) {
     // ⚠️ NEXT_REDIRECT là một loại lỗi đặc biệt của Next.js để chuyển trang
-    // Chúng ta KHÔNG được chặn nó, phải ném nó ra lại
     if ((error as any).message === 'NEXT_REDIRECT') {
       throw error;
     }
 
     // Nếu là lỗi khác (DB, Timeout...) thì log ra
     console.error("💥 LỖI CHÍ TỬ TẠI ADMIN LAYOUT:", error);
-    // Có thể throw tiếp để hiện màn hình lỗi 500 hoặc render UI lỗi tạm
     throw error;
   }
 

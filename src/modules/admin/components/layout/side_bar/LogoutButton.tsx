@@ -13,7 +13,7 @@ export default function LogoutButton() {
         // Hàm này sẽ tự gọi API /api/auth/signout
         // Tự xử lý CSRF Token và Redirect luôn, không lo crash
         await signOut({
-            callbackUrl: '/login',
+            callbackUrl: '/',
             redirect: true
         });
     };

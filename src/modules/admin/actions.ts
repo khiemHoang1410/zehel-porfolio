@@ -7,46 +7,84 @@ import { revalidatePath } from 'next/cache';
 import Tech from '../core/models/Tech';
 import Experience from '../core/models/Experience';
 
+
+const ORDER_BUFFER = 10_000;
+
 export async function createBlockAction(formData: FormData) {
-  try {
-    // 1. Chuyển FormData thành Object
-    const rawData = Object.fromEntries(formData.entries());
-    const payload = { 
-        ...rawData, 
-        isVisible: rawData.isVisible === 'on' // Checkbox trả về 'on' nếu tick
-    };
-
-    // 2. Validate bằng Zod
-    const validated = CreateBlockSchema.safeParse(payload);
-    
-    if (!validated.success) {
-      // Trả về lỗi chi tiết cho từng trường
-      return { success: false, error: validated.error.flatten().fieldErrors };
-    }
-
-    // 3. Lưu vào DB
-    await connectDB();
-    await Block.create(validated.data);
-
-    // 4. Refresh lại data (F5 ngầm)
-    revalidatePath('/');      // Update trang chủ
-    revalidatePath('/admin'); // Update trang admin
-    
-    return { success: true, message: '✅ Thêm Block thành công!' };
-  } catch (error) {
-    console.error(error);
-    return { success: false, message: '❌ Lỗi hệ thống rồi đại vương ơi!' };
-  }
-}
-
-export async function deleteBlockAction(prevState: any, id: string) {
     try {
         await connectDB();
-        await Block.findByIdAndDelete(id);
+
+        // 1. Convert FormData (Giữ nguyên của ngài - ổn rồi)
+        const rawData = {
+            title: formData.get('title'),
+            content: formData.get('content'),
+            type: formData.get('type'),
+            size: formData.get('size'),
+            link: formData.get('link'),
+            imageUrl: formData.get('imageUrl'),
+            isVisible: formData.get('isVisible') === 'true',
+            // TODO: Sau này nên thêm field 'section' (vd: 'lab', 'social') để phân loại order
+        };
+
+        // 2. Validate
+        const validated = CreateBlockSchema.safeParse(rawData);
+        if (!validated.success) {
+            return {
+                success: false,
+                message: 'Dữ liệu không hợp lệ',
+                errors: validated.error.flatten().fieldErrors
+            };
+        }
+
+        // 3. LOGIC ORDER "CHUẨN CÔNG NGHIỆP" (Thay cho countDocuments)
+        // - Tìm block có order lớn nhất hiện tại
+        // - .select('order'): Chỉ lấy trường order cho nhẹ
+        // - .lean(): Trả về plain object cho nhanh (bỏ qua hydration của Mongoose)
+        const lastBlock = await Block.findOne({}) // Nếu có scope thì thêm { section: '...' }
+            .sort({ order: -1 }) // Sắp xếp giảm dần để lấy thằng to nhất
+            .select('order')
+            .lean();
+
+        // - Nếu có lastBlock thì lấy order cũ + 10,000
+        // - Nếu chưa có (bảng rỗng) thì bắt đầu từ 10,000
+        const newOrder = lastBlock ? (lastBlock.order + ORDER_BUFFER) : ORDER_BUFFER;
+
+        // 4. Create
+        await Block.create({
+            ...validated.data,
+            order: newOrder,
+        });
+
+        // 5. Refresh (Chuẩn rồi)
         revalidatePath('/admin');
-        return { success: true, message: 'Đã xóa thành công!' };
+        revalidatePath('/');
+        revalidatePath('/lab');
+
+        return { success: true, message: 'Đã thêm Project mới! 🚀' };
     } catch (error) {
-        return { success: false, message: 'Lỗi xóa block' };
+        console.error("Create Block Error:", error);
+        // Lưu ý: Trong thực tế nên log error vào hệ thống monitoring (như Sentry)
+        return { success: false, message: 'Lỗi Server: Không thể lưu.' };
+    }
+}
+
+// --- DELETE ---
+export async function deleteBlockAction(id: string) {
+    try {
+        await connectDB();
+
+        // Xóa cứng (Hard Delete). 
+        // Các dự án lớn thường dùng "Soft Delete" (thêm field deletedAt: Date)
+        // để có thể khôi phục lại khi lỡ tay. Nhưng MVP thì Hard Delete là OK.
+        await Block.findByIdAndDelete(id);
+
+        revalidatePath('/admin');
+        revalidatePath('/');
+
+        return { success: true, message: 'Đã xóa bay màu! 🗑️' };
+    } catch (error) {
+        console.error("Delete Error:", error); // Nhớ log lỗi ra để debug nhé
+        return { success: false, message: 'Lỗi xóa Project.' };
     }
 }
 
@@ -57,7 +95,7 @@ export async function createTechAction(formData: FormData) {
         const rawData = Object.fromEntries(formData.entries());
         // Lưu ý: Ngài nên tạo Zod Schema cho Tech để validate nhé (tôi làm tắt cho gọn)
         await Tech.create(rawData);
-        
+
         revalidatePath('/admin');
         revalidatePath('/'); // Update trang chủ luôn
         return { success: true, message: 'Đã thêm Tech!' };
@@ -65,6 +103,7 @@ export async function createTechAction(formData: FormData) {
         return { success: false, message: 'Lỗi thêm Tech' };
     }
 }
+
 
 export async function deleteTechAction(id: string) {
     try {
@@ -85,9 +124,9 @@ export async function createExpAction(formData: FormData) {
         const rawData = Object.fromEntries(formData.entries());
         // Convert string tags "React, NextJS" -> Array ["React", "NextJS"]
         const tags = (rawData.tags as string).split(',').map(t => t.trim());
-        
+
         await Experience.create({ ...rawData, tags });
-        
+
         revalidatePath('/admin');
         return { success: true, message: 'Đã thêm Kinh nghiệm!' };
     } catch (error) {

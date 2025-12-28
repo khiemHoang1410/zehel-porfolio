@@ -25,7 +25,7 @@ export async function ProjectList() {
         {blocks.map((block: any) => (
           <div 
             key={block._id.toString()} 
-            className="bg-white border-2 border-black p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all relative group"
+            className="bg-white border-2 border-black p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all relative group"
           >
             {/* Header Card */}
             <div className="flex justify-between items-start mb-2">
@@ -54,7 +54,7 @@ export async function ProjectList() {
             </div>
 
             {/* Content preview */}
-            <p className="text-sm text-gray-600 line-clamp-2 min-h-[40px] font-medium border-l-2 border-gray-100 pl-2">
+            <p className="text-sm text-gray-600 line-clamp-2 min-h-10 font-medium border-l-2 border-gray-100 pl-2">
               {block.content || "Không có mô tả..."}
             </p>
             
