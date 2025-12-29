@@ -4,9 +4,9 @@ import AdminDashboard from '@/modules/admin/components/dashboard/AdminDashboard'
 import Message from '@/modules/core/models/Message';
 import Tech from '@/modules/core/models/Tech';
 import Block from '@/modules/core/models/Block';
+import { ITech } from '@/modules/core/dtos/teck.dto';
 
-const serialize = <T,>(data: T): T => JSON.parse(JSON.stringify(data));
-
+const serialize = (data: any) => JSON.parse(JSON.stringify(data));
 export const dynamic = 'force-dynamic';
 
 export default async function AdminPage() {
@@ -28,7 +28,7 @@ export default async function AdminPage() {
         totalBlocks: blocks.length,
         totalTechs: techs.length,
         totalMessages: messages.length,
-        
+
     };
 
     return (

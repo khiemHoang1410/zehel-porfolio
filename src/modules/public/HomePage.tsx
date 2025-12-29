@@ -1,9 +1,12 @@
+// src/app/components/HomePage.tsx (Hoặc đường dẫn ông đang để file này)
+'use client';
+
 import React from 'react';
 import { Terminal, ArrowRight, Zap } from 'lucide-react';
 import Marquee from './components/Marquee';
 import BentoGrid from './components/bento/BentoGrid';
-import TechStack from './components/TechStack';
 import PageTransition from '@/shared/components/ui/PageTransition';
+import TechArsenal from './components/tech/TechArsenal'; // Import cái mới xịn xò
 
 interface PortfolioProps {
     data: {
@@ -12,7 +15,7 @@ interface PortfolioProps {
     };
 }
 
-export default function PortfolioPage({ data }: PortfolioProps) {
+export default function HomePage({ data }: PortfolioProps) {
     const { blocks, techs } = data;
 
     return (
@@ -29,7 +32,7 @@ export default function PortfolioPage({ data }: PortfolioProps) {
 
                         <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9]">
                             Code Like A <br />
-                            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-pink-600">Madness</span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Madness</span>
                         </h1>
 
                         <p className="text-lg md:text-xl font-medium text-gray-700 max-w-md border-l-4 border-black pl-4">
@@ -37,7 +40,7 @@ export default function PortfolioPage({ data }: PortfolioProps) {
                         </p>
 
                         <div className="flex gap-4">
-                            <a href="https://github.com/khiemhoang1410" target="_blank" className="flex items-center gap-2 bg-black text-white px-6 py-3 font-bold text-lg hover:bg-gray-800 transition-all hover:shadow-[4px_4px_0px_0px_#fbbf24] hover:-translate-y-1">
+                            <a href="https://github.com/khiemhoang1410" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-black text-white px-6 py-3 font-bold text-lg hover:bg-gray-800 transition-all hover:shadow-[4px_4px_0px_0px_#fbbf24] hover:-translate-y-1">
                                 <Terminal size={20} /> GitHub
                             </a>
                             <button className="flex items-center gap-2 bg-white text-black border-2 border-black px-6 py-3 font-bold text-lg hover:bg-yellow-100 transition-all hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1">
@@ -67,8 +70,9 @@ export default function PortfolioPage({ data }: PortfolioProps) {
                     <Marquee text="ZEHEL PORTFOLIO • EAT SLEEP CODE REPEAT • NEXTJS 16 • TAILWIND 4 • MONGODB • SẴN SÀNG CHIẾN ĐẤU" />
                 </div>
 
-                {/* 3. TECH STACK */}
+                {/* 3. TECH STACK (KHO VŨ KHÍ) */}
                 <section className="py-12 px-4 md:px-8 max-w-7xl mx-auto">
+                    {/* Header trang trí */}
                     <div className="flex items-center gap-4 mb-8">
                         <div className="h-1 flex-1 bg-black"></div>
                         <h2 className="text-3xl font-black uppercase tracking-widest bg-white px-4 py-2 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
@@ -76,19 +80,15 @@ export default function PortfolioPage({ data }: PortfolioProps) {
                         </h2>
                         <div className="h-1 flex-1 bg-black"></div>
                     </div>
-                    {/* Nếu component TechStack chưa sửa xong import thì comment tạm lại nhé */}
-                    <TechStack techs={techs} />
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {techs.map((t: any) => (
-                            <div key={t._id} className="border-2 border-black p-4 font-bold flex items-center gap-2 bg-white shadow-sm hover:-translate-y-1 transition-transform">
-                                <span className="w-3 h-3 rounded-full" style={{ backgroundColor: t.color }}></span>
-                                {t.name}
-                            </div>
-                        ))}
+
+                    {/* Component hiển thị Tech */}
+                    <div className="container mx-auto px-4">
+                        {/* 🔥 Fix: Truyền thẳng techs vào, không cần gọi serialize nữa */}
+                        <TechArsenal techs={techs} />
                     </div>
                 </section>
 
-                {/* 4. BENTO GRID */}
+                {/* 4. BENTO GRID (PROJECTS) */}
                 <section className="py-12 px-4 md:px-8 max-w-7xl mx-auto min-h-[500px]">
                     <div className="mb-10 text-left">
                         <h2 className="text-4xl md:text-5xl font-black inline-block relative z-10">

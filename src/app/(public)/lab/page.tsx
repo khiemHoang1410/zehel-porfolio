@@ -2,7 +2,7 @@
 import React from 'react';
 import connectDB from '@/shared/lib/db';
 import Block from '@/modules/core/models/Block';
-import LabBoard from '../../../modules/portfolio/components/lab/LabBoard'; // Component giao diện mình sẽ tạo ở bước 2
+import LabBoard from '../../../modules/public/components/lab/LabBoard'; // Component giao diện mình sẽ tạo ở bước 2
 import PageTransition from '../../../shared/components/ui/PageTransition'; // Hiệu ứng chuyển trang cũ
 
 async function getLabData() {

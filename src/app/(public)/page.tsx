@@ -1,10 +1,10 @@
-import { getPortfolioData } from "@/modules/portfolio/services";
-import PortfolioPage from "@/modules/portfolio/PortfolioPage";
+import HomePage from "@/modules/public/HomePage";
+import { getPortfolioData } from "@/modules/public/services";
 
 export default async function Home() {
   // 1. Lấy dữ liệu (Server Side)
   const data = await getPortfolioData();
 
   // 2. Render UI
-  return <PortfolioPage data={data} />;
+  return <HomePage data={data} />;
 }
