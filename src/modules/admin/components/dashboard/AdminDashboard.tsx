@@ -1,76 +1,69 @@
+// src/modules/admin/components/dashboard/AdminDashboard.tsx
 'use client';
-import { useState } from 'react';
-import { Layout, Mail, Cpu, Briefcase } from 'lucide-react';
-import ProjectForm from '../projects/ProjectForm';
-import TechsManager from '../TechsManager';
-import InboxManager from '../InboxManager';
-// import ExperiencesManager from './ExperiencesManager'; (Ngài tự tạo file này tương tự TechsManager nhé)
 
-type TabType = 'blocks' | 'messages' | 'techs' | 'exp';
+import { useSearchParams } from 'next/navigation';
+import { LayoutDashboard, Mail, Cpu, Briefcase } from 'lucide-react';
+import ProjectManager from '../projects/ProjectManager';
+import { IBlock } from '@/modules/core/dtos/block.dto';
 
-export default function AdminDashboard({ 
-    messages, 
-    techs, 
-    // experiences 
-}: { 
-    messages: any[], 
-    techs: any[], 
-    // experiences: any[] 
-}) {
-    const [activeTab, setActiveTab] = useState<TabType>('blocks');
+interface DashboardProps {
+    initialBlocks?: IBlock[]; // Thêm ? để an toàn
+    initialTechs?: any[];
+    initialMessages?: any[];
+}
 
-    const tabs = [
-        { id: 'blocks', icon: Layout, label: 'Projects' },
-        { id: 'messages', icon: Mail, label: `Inbox (${messages.length})` },
-        { id: 'techs', icon: Cpu, label: 'Tech Stack' },
-        { id: 'exp', icon: Briefcase, label: 'Experience' },
-    ];
+export default function AdminDashboard({
+    initialBlocks = [],
+    initialTechs = [],
+    initialMessages = []
+}: DashboardProps) {
+
+    const searchParams = useSearchParams();
+    const currentTab = searchParams.get('tab') || 'projects';
+
+    const getPageTitle = () => {
+        switch (currentTab) {
+            case 'projects': return { title: 'Quản lý Dự Án / Blocks', icon: LayoutDashboard };
+            case 'techs': return { title: 'Kho Vũ Khí (Tech Stack)', icon: Cpu };
+            case 'messages': return { title: 'Hòm Thư Liên Hệ', icon: Mail };
+            case 'experience': return { title: 'Hành Trình Sự Nghiệp', icon: Briefcase };
+            default: return { title: 'Dashboard', icon: LayoutDashboard };
+        }
+    };
+
+    const { title, icon: Icon } = getPageTitle();
 
     return (
-        <div className="min-h-screen bg-gray-100 p-4 md:p-8 text-black font-mono">
-            <div className="max-w-6xl mx-auto">
-                {/* Header & Menu */}
-                <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-                    <h1 className="text-3xl font-black uppercase tracking-tighter">ZEHEL DASHBOARD</h1>
-                    <div className="flex bg-white border-2 border-black rounded-lg overflow-hidden shadow-sm">
-                        {tabs.map((tab) => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id as TabType)}
-                                className={`p-3 px-4 font-bold flex gap-2 items-center transition-colors ${
-                                    activeTab === tab.id 
-                                    ? 'bg-black text-white' 
-                                    : 'hover:bg-gray-100 border-l border-black first:border-0'
-                                }`}
-                            >
-                                <tab.icon size={18} /> {tab.label}
-                            </button>
-                        ))}
+        <div className="w-full h-full">
+            {/* Header */}
+            <div className="mb-6 flex items-center gap-3 border-b-2 border-gray-200 pb-4">
+                <div className="p-2 bg-black text-white rounded-lg shadow-lg">
+                    <Icon size={24} />
+                </div>
+                <h2 className="text-2xl font-black uppercase tracking-tight text-gray-800">
+                    {title}
+                </h2>
+            </div>
+
+            {/* Content Area */}
+            <div className="min-h-[500px]">
+                {currentTab === 'projects' && (
+                    // 👇 Gọi Manager, truyền data blocks vào
+                    <ProjectManager initialData={initialBlocks} />
+                )}
+
+                {currentTab === 'techs' && (
+                    <div className="p-10 border-4 border-dashed text-center text-gray-400">
+                        Tech Stack Manager (Coming soon)
                     </div>
-                </div>
+                )}
 
-                {/* Content Area */}
-                <div>
-                    {activeTab === 'blocks' && (
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                            <div className="lg:col-span-1"><ProjectForm /></div>
-                            {/* ProjectList ngài có thể import trực tiếp vào đây vì nó tự fetch data riêng */}
-                             {/* Hoặc nếu muốn đồng bộ, ngài chuyển ProjectList sang nhận props */}
-                             <div className="lg:col-span-2">
-                                {/* Tạm thời để text này, ngài import ProjectList vào là chạy */}
-                                <div className="p-4 border-2 border-dashed border-gray-400 text-center">Load ProjectList Component Here</div>
-                             </div>
-                        </div>
-                    )}
-
-                    {activeTab === 'messages' && <InboxManager messages={messages} />}
-                    
-                    {activeTab === 'techs' && <TechsManager techs={techs} />}
-                    
-                    {activeTab === 'exp' && (
-                        <div className="text-center">Khu vực Experience (Ngài Zehel tự code nốt nhé 😉)</div>
-                    )}
-                </div>
+                {currentTab === 'messages' && (
+                    <div className="p-10 border-4 border-dashed border-gray-300 text-center text-gray-400 rounded-xl">
+                        <Mail size={48} className="mx-auto mb-2 opacity-50" />
+                        <p>Inbox: {initialMessages.length} tin nhắn (Đang xây dựng...)</p>
+                    </div>
+                )}
             </div>
         </div>
     );

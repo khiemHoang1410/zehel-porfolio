@@ -10,7 +10,7 @@ export const CreateBlockSchema = z.object({
     title: z
         .string()
         .min(1, "Tiêu đề không được để trống")
-        .max(100, "Tiêu đề tối đa 100 ký tự"), // Rõ ràng hơn
+        .max(100, "Tiêu đề tối đa 100 ký tự"),
 
     content: z.string().optional(),
 
@@ -18,8 +18,7 @@ export const CreateBlockSchema = z.object({
 
     size: BlockSizeEnum,
 
-    // Nâng cấp: Validate URL chuẩn
-    // Nếu rỗng thì OK, nếu có chữ thì phải là URL hợp lệ
+    // Validate URL: Cho phép rỗng HOẶC phải là URL chuẩn
     link: z.string().url("Link phải đúng định dạng URL (http/https)").optional().or(z.literal('')),
 
     imageUrl: z.string().url("Link ảnh không hợp lệ").optional().or(z.literal('')),
@@ -29,19 +28,18 @@ export const CreateBlockSchema = z.object({
 
 // 3. Schema Full (Dữ liệu từ DB trả về)
 export const BlockSchema = CreateBlockSchema.extend({
-    // Mongoose trả về _id, nhưng Frontend thường thích dùng id.
-    // Ta chấp nhận cả 2 hoặc transform
-    id: z.string(),
+    // ⚠️ QUAN TRỌNG: MongoDB trả về _id, ta phải khai báo _id để khớp dữ liệu
+    _id: z.string(),
 
-    order: z.number().int(),
+    order: z.number().int().default(0),
 
     // 🔥 FIX QUAN TRỌNG: Coerce Date
-    // Cho phép nhận String (từ JSON) và tự ép kiểu về Date Object để dùng trong JS
+    // Tự động ép kiểu String (từ JSON/API) về Date Object để dùng trong JS
     createdAt: z.coerce.date(),
-    updatedAt: z.coerce.date(),
+    updatedAt: z.coerce.date().optional(),
 });
 
-// 4. Schema Update Order (Cho Drag & Drop)
+// 4. Schema Update Order (Cho Drag & Drop sau này)
 export const UpdateBlockOrderSchema = z.array(
     z.object({
         id: z.string(),
@@ -50,7 +48,13 @@ export const UpdateBlockOrderSchema = z.array(
 );
 
 // 5. Export Types tự động (Để dùng ở mọi nơi)
+// Dùng cho Form Create
 export type CreateBlockDTO = z.infer<typeof CreateBlockSchema>;
-export type BlockDTO = z.infer<typeof BlockSchema>; // Dùng cái này cho React Component Props
-export type BlockType = z.infer<typeof BlockTypeEnum>; // Dùng cho biến check type
-export type BlockSize = z.infer<typeof BlockSizeEnum>; // Dùng cho biến check type
+
+// Dùng cho React Props (Thay thế interface IBlock cũ)
+export type IBlock = z.infer<typeof BlockSchema>; 
+export type BlockDTO = IBlock; // Alias (tên gọi khác) nếu thích
+
+// Dùng cho các biến check type
+export type BlockType = z.infer<typeof BlockTypeEnum>; 
+export type BlockSize = z.infer<typeof BlockSizeEnum>;
