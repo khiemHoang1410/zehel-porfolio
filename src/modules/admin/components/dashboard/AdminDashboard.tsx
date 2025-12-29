@@ -2,27 +2,36 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { LayoutDashboard, Mail, Cpu, Briefcase } from 'lucide-react';
+import { LayoutDashboard, Mail, Cpu, Briefcase, Home } from 'lucide-react';
 import ProjectManager from '../projects/ProjectManager';
 import { IBlock } from '@/modules/core/dtos/block.dto';
+import DashboardOverview from './DashboardOverview';
 
 interface DashboardProps {
-    initialBlocks?: IBlock[]; // Thêm ? để an toàn
+    initialBlocks?: IBlock[];
     initialTechs?: any[];
     initialMessages?: any[];
+    // Thêm props stats
+    stats: {
+        totalBlocks: number;
+        totalTechs: number;
+        totalMessages: number;
+    };
 }
 
 export default function AdminDashboard({
     initialBlocks = [],
     initialTechs = [],
-    initialMessages = []
+    initialMessages = [],
+    stats
 }: DashboardProps) {
 
     const searchParams = useSearchParams();
-    const currentTab = searchParams.get('tab') || 'projects';
+    const currentTab = searchParams.get('tab') || 'overview';
 
     const getPageTitle = () => {
         switch (currentTab) {
+            case 'overview': return { title: 'Tổng Quan Hệ Thống', icon: Home }; // Trang chủ
             case 'projects': return { title: 'Quản lý Dự Án / Blocks', icon: LayoutDashboard };
             case 'techs': return { title: 'Kho Vũ Khí (Tech Stack)', icon: Cpu };
             case 'messages': return { title: 'Hòm Thư Liên Hệ', icon: Mail };
@@ -47,6 +56,16 @@ export default function AdminDashboard({
 
             {/* Content Area */}
             <div className="min-h-[500px]">
+
+                {/* 👇 TRANG CHỦ DASHBOARD */}
+                {currentTab === 'overview' && (
+                    <DashboardOverview
+                        stats={stats}
+                        recentMessages={initialMessages.slice(0, 5)} // Lấy 5 tin mới nhất
+                        recentBlocks={initialBlocks}
+                    />
+                )}
+
                 {currentTab === 'projects' && (
                     // 👇 Gọi Manager, truyền data blocks vào
                     <ProjectManager initialData={initialBlocks} />
