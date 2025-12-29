@@ -12,7 +12,7 @@ const MENU_ITEMS = [
   { label: 'Projects', icon: LayoutDashboard, href: '/admin?tab=projects', slug: 'projects' },
   { label: 'Tech Stack', icon: Cpu, href: '/admin?tab=techs', slug: 'techs' },
   { label: 'Experience', icon: Briefcase, href: '/admin?tab=experience', slug: 'experience' },
-  { label: 'Inbox', icon: Mail, href: '/admin?tab=messages', slug: 'messages' },
+  { label: 'Mail', icon: Mail, href: '/admin?tab=messages', slug: 'messages' },
 ];
 
 function AdminSidebarContent() {

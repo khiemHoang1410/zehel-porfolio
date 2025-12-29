@@ -7,6 +7,7 @@ import { revalidatePath } from 'next/cache';
 import Tech from '../core/models/Tech';
 import Experience from '../core/models/Experience';
 import Message from '../core/models/Message';
+import { CreateTechDTO, CreateTechSchema } from '../core/dtos/teck.dto';
 
 
 const ORDER_BUFFER = 10_000;
@@ -89,19 +90,29 @@ export async function deleteBlockAction(id: string) {
     }
 }
 
-
-export async function createTechAction(formData: FormData) {
+export async function createTechAction(data: CreateTechDTO) {
     try {
         await connectDB();
-        const rawData = Object.fromEntries(formData.entries());
-        // Lưu ý: Ngài nên tạo Zod Schema cho Tech để validate nhé (tôi làm tắt cho gọn)
-        await Tech.create(rawData);
+
+        // 1. Validate dữ liệu Server-side (Dùng data trực tiếp, không cần parse từ FormData nữa)
+        const validatedFields = CreateTechSchema.safeParse(data);
+
+        if (!validatedFields.success) {
+            return {
+                success: false,
+                message: "Dữ liệu không hợp lệ!",
+                errors: validatedFields.error.flatten().fieldErrors
+            };
+        }
+
+        // 2. Lưu vào DB
+        await Tech.create(validatedFields.data);
 
         revalidatePath('/admin');
-        revalidatePath('/'); // Update trang chủ luôn
-        return { success: true, message: 'Đã thêm Tech!' };
+        return { success: true, message: "Đã nạp đạn vào kho vũ khí! 🔫" };
     } catch (error) {
-        return { success: false, message: 'Lỗi thêm Tech' };
+        console.error("Lỗi tạo Tech:", error);
+        return { success: false, message: "Lỗi Server, không lưu được!" };
     }
 }
 

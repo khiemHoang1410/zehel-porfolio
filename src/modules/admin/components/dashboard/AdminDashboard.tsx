@@ -3,14 +3,18 @@
 
 import { useSearchParams } from 'next/navigation';
 import { LayoutDashboard, Mail, Cpu, Briefcase, Home } from 'lucide-react';
+
 import ProjectManager from '../projects/ProjectManager';
-import { IBlock } from '@/modules/core/dtos/block.dto';
 import DashboardOverview from './DashboardOverview';
-import InboxManager from '../mail/InboxManager';
+import InboxManager from '../mails/InboxManager';
+
+import { IBlock } from '@/modules/core/dtos/block.dto';
+import { ITech } from '@/modules/core/dtos/teck.dto';
+import TechsManager from '../techs/TechsManager';
 
 interface DashboardProps {
     initialBlocks?: IBlock[];
-    initialTechs?: any[];
+    initialTechs?: ITech[]; // 👈 Định nghĩa kiểu dữ liệu ở đây
     initialMessages?: any[];
     // Thêm props stats
     stats: {
@@ -73,9 +77,7 @@ export default function AdminDashboard({
                 )}
 
                 {currentTab === 'techs' && (
-                    <div className="p-10 border-4 border-dashed text-center text-gray-400">
-                        Tech Stack Manager (Coming soon)
-                    </div>
+                    <TechsManager initialData={initialTechs} />
                 )}
 
                 {currentTab === 'messages' && (
