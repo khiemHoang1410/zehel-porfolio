@@ -23,7 +23,7 @@ export default function  DashboardOverview({ stats, recentMessages, recentBlocks
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b-2 border-black pb-6">
                 <div>
                     <h2 className="text-4xl font-black uppercase tracking-tighter">
-                        Xin chào, Zehel 👋
+                        welcome back, boss 👋
                     </h2>
                     <p className="text-gray-500 font-medium mt-1">
                         Hệ thống đang hoạt động bình thường. Hôm nay ngài muốn làm gì?

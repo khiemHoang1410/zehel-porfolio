@@ -1,4 +1,4 @@
-// models/Message.ts
+// src\modules\core\models\Message.ts
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IMessage extends Document {

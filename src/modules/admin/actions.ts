@@ -6,6 +6,7 @@ import { CreateBlockSchema } from './dtos';
 import { revalidatePath } from 'next/cache';
 import Tech from '../core/models/Tech';
 import Experience from '../core/models/Experience';
+import Message from '../core/models/Message';
 
 
 const ORDER_BUFFER = 10_000;
@@ -143,5 +144,28 @@ export async function deleteExpAction(id: string) {
         return { success: true, message: 'Đã xóa Exps!' };
     } catch (error) {
         return { success: false, message: 'Lỗi xóa Exps' };
+    }
+}
+
+export async function deleteMessageAction(id: string) {
+    try {
+        await connectDB();
+        await Message.findByIdAndDelete(id);
+        revalidatePath('/admin');
+        return { success: true, message: "Đã xóa tin nhắn thành công! 🗑️" };
+    } catch (error) {
+        return { success: false, message: "Lỗi Server, không xóa được!" };
+    }
+}
+
+// 2. Đánh dấu đã đọc / chưa đọc
+export async function toggleMessageReadStatusAction(id: string, currentStatus: boolean) {
+    try {
+        await connectDB();
+        await Message.findByIdAndUpdate(id, { isRead: !currentStatus });
+        revalidatePath('/admin');
+        return { success: true, message: currentStatus ? "Đã đánh dấu chưa đọc" : "Đã xem ✔️" };
+    } catch (error) {
+        return { success: false, message: "Lỗi cập nhật trạng thái!" };
     }
 }

@@ -6,6 +6,7 @@ import { LayoutDashboard, Mail, Cpu, Briefcase, Home } from 'lucide-react';
 import ProjectManager from '../projects/ProjectManager';
 import { IBlock } from '@/modules/core/dtos/block.dto';
 import DashboardOverview from './DashboardOverview';
+import InboxManager from '../mail/InboxManager';
 
 interface DashboardProps {
     initialBlocks?: IBlock[];
@@ -79,8 +80,7 @@ export default function AdminDashboard({
 
                 {currentTab === 'messages' && (
                     <div className="p-10 border-4 border-dashed border-gray-300 text-center text-gray-400 rounded-xl">
-                        <Mail size={48} className="mx-auto mb-2 opacity-50" />
-                        <p>Inbox: {initialMessages.length} tin nhắn (Đang xây dựng...)</p>
+                        <InboxManager messages={initialMessages} />
                     </div>
                 )}
             </div>
