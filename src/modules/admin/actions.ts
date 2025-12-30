@@ -71,25 +71,22 @@ export async function createBlockAction(formData: FormData) {
 }
 
 // --- DELETE ---
+// Hàm này chỉ cần nhận ID là đủ
 export async function deleteBlockAction(id: string) {
     try {
         await connectDB();
 
-        // Xóa cứng (Hard Delete). 
-        // Các dự án lớn thường dùng "Soft Delete" (thêm field deletedAt: Date)
-        // để có thể khôi phục lại khi lỡ tay. Nhưng MVP thì Hard Delete là OK.
         await Block.findByIdAndDelete(id);
 
         revalidatePath('/admin');
-        revalidatePath('/');
+        revalidatePath('/'); // Refresh cả trang chủ luôn cho chắc
 
         return { success: true, message: 'Đã xóa bay màu! 🗑️' };
     } catch (error) {
-        console.error("Delete Error:", error); // Nhớ log lỗi ra để debug nhé
+        console.error("Delete Error:", error);
         return { success: false, message: 'Lỗi xóa Project.' };
     }
 }
-
 
 export async function createTechAction(data: CreateTechDTO) {
     try {
