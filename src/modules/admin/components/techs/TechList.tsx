@@ -101,7 +101,7 @@ export default function TechList({ techs, onEdit }: { techs: ITech[], onEdit: (t
                             onClick={() => copyIconName(tech.iconName)}
                             className="text-[10px] font-mono text-gray-500 bg-gray-50 border border-dashed border-gray-300 rounded px-2 py-1 cursor-pointer hover:bg-black hover:text-white hover:border-black transition-colors flex justify-center items-center gap-1 group/copy"
                         >
-                            <span className="truncate max-w-[80px]">{tech.iconName}</span>
+                            <span className="truncate max-w-20">{tech.iconName}</span>
                             <Copy size={8} className="opacity-0 group-hover/copy:opacity-100" />
                         </div>
                     </div>
