@@ -7,10 +7,8 @@ import AdminHeader from "@/modules/admin/components/layout/side_bar/AdminHeader"
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   try {
     const session = await auth();
-    console.log("🔍 AdminLayout: Kết quả session ->", session?.user?.email || "Không có session");
 
     if (!session) {
-      console.log("⚠️ AdminLayout: Session null -> Đang Redirect về login...");
       redirect("/login");
     }
   } catch (error) {

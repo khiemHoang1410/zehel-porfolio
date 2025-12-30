@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import BlockCard from './BlockCard';
 import BlockModal from '../../../../shared/components/ui/BlockModal';
-import FloatingDock from '../../../../shared/components/ui/FloatingDock';
+import FloatingDock from '../../../../shared/components/floating_dock/FloatingDock';
 import { BlockType } from '@/types';
 
 const BentoGrid = ({ blocks }: { blocks: BlockType[] }) => {

@@ -1,5 +1,5 @@
 // src/app/(public)/layout.tsx
-import DockWrapper from "@/shared/components/ui/DockWrapper"; // Nhớ sửa đường dẫn import
+import DockWrapper from "@/shared/components/floating_dock/DockWrapper"; // Nhớ sửa đường dẫn import
 import ContactButton from "@/shared/components/ui/ContactButton";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {

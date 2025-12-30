@@ -1,7 +1,7 @@
 'use client';
 
 import { deleteTechAction } from '@/modules/admin/actions';
-import { Trash2, Copy, Star } from 'lucide-react';
+import { Trash2, Copy, Star, Pencil } from 'lucide-react';
 import { useTransition } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -25,7 +25,7 @@ const levelColors: Record<string, string> = {
     master: 'border-yellow-500 shadow-[0px_0px_10px_rgba(234,179,8,0.5)]',
 };
 
-export default function TechList({ techs }: { techs: ITech[] }) {
+export default function TechList({ techs, onEdit }: { techs: ITech[], onEdit: (tech: ITech) => void }) {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
 
@@ -107,13 +107,24 @@ export default function TechList({ techs }: { techs: ITech[] }) {
                     </div>
 
                     {/* 5. Nút Xóa (Hover mới hiện) */}
-                    <button
-                        onClick={() => handleDelete(tech._id)}
-                        className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 p-1.5 hover:bg-red-600 hover:text-white transition-all border border-black bg-white shadow-sm"
-                        title="Delete"
-                    >
-                        <Trash2 size={14} />
-                    </button>
+                    <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {/* Nút Edit - Bấm cái gọi onEdit ngay */}
+                        <button
+                            onClick={() => onEdit(tech)}
+                            className="p-1.5 hover:bg-yellow-400 hover:text-black transition-all border border-black bg-white shadow-sm"
+                            title="Sửa"
+                        >
+                            <Pencil size={12} />
+                        </button>
+
+                        <button
+                            onClick={() => handleDelete(tech._id)}
+                            className="p-1.5 hover:bg-red-600 hover:text-white transition-all border border-black bg-white shadow-sm"
+                            title="Xóa"
+                        >
+                            <Trash2 size={12} />
+                        </button>
+                    </div>
                 </div>
             ))}
         </div>

@@ -7,7 +7,7 @@ import { BlockType } from '@/types';
 type BlockCardProps = Pick<BlockType, 'title' | 'type' | 'content' | 'size' | 'color' | 'link'>;
 
 const BlockCard = ({ title, type, content, size, color, link }: BlockCardProps) => {
-  
+
   // 1. Config màu sắc & Icon xịn xò theo từng loại
   const getTheme = (type: string) => {
     switch (type) {
@@ -48,7 +48,7 @@ const BlockCard = ({ title, type, content, size, color, link }: BlockCardProps) 
         <div className={`p-2.5 rounded-lg border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:rotate-6`}>
           {theme.icon}
         </div>
-        
+
         {/* Tag hiển thị loại (Project, Note...) */}
         <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded border border-black/10 ${theme.bgTag}`}>
           {type}
@@ -70,16 +70,16 @@ const BlockCard = ({ title, type, content, size, color, link }: BlockCardProps) 
 
         {/* --- FOOTER: Link (Chỉ hiện khi hover hoặc size to) --- */}
         <div className="mt-4 flex items-center justify-end opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-           <span className="text-xs font-bold mr-1">XEM NGAY</span>
-           <MoveUpRight size={16} />
+          <span className="text-xs font-bold mr-1">XEM NGAY</span>
+          <MoveUpRight size={16} />
         </div>
       </div>
 
       {/* --- DECORATION: Họa tiết nền mờ ảo --- */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none z-0 bg-[radial-gradient(#000000_1px,transparent_1px)] [background-size:16px_16px]"></div>
-      
+      <div className="absolute inset-0 opacity-5 pointer-events-none z-0 bg-[radial-gradient(#000000_1px,transparent_1px)] bg-size-[16px_16px]"></div>
+
       {/* Hiệu ứng Shine khi hover */}
-      <div className="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[20deg] group-hover:animate-shine" />
+      <div className="absolute top-0 -left-full w-1/2 h-full bg-linear-to-r from-transparent via-white/40 to-transparent skew-x-20 group-hover:animate-shine" />
     </div>
   );
 };

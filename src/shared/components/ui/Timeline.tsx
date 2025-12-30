@@ -34,7 +34,7 @@ export default function Timeline() {
 
       <div className="relative pl-8 md:pl-0">
         {/* Đường kẻ dọc: Dày dặn, đen tuyền */}
-        <div className="absolute left-[9px] md:left-1/2 top-0 h-full w-[4px] bg-black -translate-x-1/2 rounded-full opacity-20 md:opacity-100"></div>
+        <div className="absolute left-[9px] md:left-1/2 top-0 h-full w-1 bg-black -translate-x-1/2 rounded-full opacity-20 md:opacity-100"></div>
 
         <div className="space-y-12">
           {data.map((item, index) => {

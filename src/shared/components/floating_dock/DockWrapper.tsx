@@ -32,18 +32,18 @@ const DockWrapper = () => {
     if (routes[id]) {
       // Nếu là link ngoài hoặc file PDF thì mở tab mới
       if (id === 'resume') {
-         window.open(routes[id], '_blank');
+        window.open(routes[id], '_blank');
       } else {
-         router.push(routes[id]);
+        router.push(routes[id]);
       }
     }
   };
 
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
-      <FloatingDock 
-        currentFilter={getActiveTab()} 
-        onFilterChange={handleDockClick} 
+      <FloatingDock
+        currentFilter={getActiveTab()}
+        onFilterChange={handleDockClick}
       />
     </div>
   );

@@ -22,14 +22,14 @@ const BlockModal = ({ isOpen, onClose, block }: ModalProps) => {
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSending(true);
-    
+
     try {
       const res = await fetch('/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
-      
+
       if (res.ok) {
         setSent(true);
         setFormData({ name: '', email: '', content: '' }); // Reset form
@@ -50,8 +50,8 @@ const BlockModal = ({ isOpen, onClose, block }: ModalProps) => {
         <div className="text-center py-20 animate-pulse">
           <h3 className="text-3xl font-black text-green-600 mb-4">ĐÃ GỬI THÀNH CÔNG! ✅</h3>
           <p>Cảm ơn bạn đã liên hệ. Zehel sẽ phản hồi sớm nhất!</p>
-          <button 
-            onClick={() => setSent(false)} 
+          <button
+            onClick={() => setSent(false)}
             className="mt-6 text-sm underline hover:text-blue-600"
           >
             Gửi tin nhắn khác
@@ -64,36 +64,36 @@ const BlockModal = ({ isOpen, onClose, block }: ModalProps) => {
       <form onSubmit={handleSend} className="space-y-4 mt-4">
         <div>
           <label className="block font-bold mb-1">Tên của bạn</label>
-          <input 
+          <input
             required
             className="w-full p-3 border-2 border-black focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none transition-all"
             placeholder="Ví dụ: HR Google"
             value={formData.name}
-            onChange={e => setFormData({...formData, name: e.target.value})}
+            onChange={e => setFormData({ ...formData, name: e.target.value })}
           />
         </div>
         <div>
           <label className="block font-bold mb-1">Email liên hệ</label>
-          <input 
+          <input
             required type="email"
             className="w-full p-3 border-2 border-black focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none transition-all"
             placeholder="hr@google.com"
             value={formData.email}
-            onChange={e => setFormData({...formData, email: e.target.value})}
+            onChange={e => setFormData({ ...formData, email: e.target.value })}
           />
         </div>
         <div>
           <label className="block font-bold mb-1">Lời nhắn</label>
-          <textarea 
+          <textarea
             required
             rows={5}
             className="w-full p-3 border-2 border-black focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none transition-all"
             placeholder="Zehel ơi, đi làm lương 5k$ không?"
             value={formData.content}
-            onChange={e => setFormData({...formData, content: e.target.value})}
+            onChange={e => setFormData({ ...formData, content: e.target.value })}
           />
         </div>
-        <button 
+        <button
           disabled={isSending}
           className="w-full bg-black text-white font-bold py-4 text-xl hover:bg-zinc-800 flex justify-center items-center gap-2"
         >
@@ -120,44 +120,44 @@ const BlockModal = ({ isOpen, onClose, block }: ModalProps) => {
         {/* Content Body */}
         <div className="p-6 overflow-y-auto bg-white text-black leading-relaxed">
           {block.type === 'contact' ? (
-             // Nếu là type contact -> Hiện Form
-             renderContactForm()
+            // Nếu là type contact -> Hiện Form
+            renderContactForm()
           ) : (
-             // Nếu không -> Hiện Markdown bình thường
-             <>
-                <ReactMarkdown
-                  components={{
-                    code({node, inline, className, children, ...props} : any) {
-                      const match = /language-(\w+)/.exec(className || '')
-                      return !inline && match ? (
-                        <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div" {...props}>
-                          {String(children).replace(/\n$/, '')}
-                        </SyntaxHighlighter>
-                      ) : (
-                        <code className={`${className} bg-gray-200 px-1 rounded text-red-500 font-mono`} {...props}>
-                          {children}
-                        </code>
-                      )
-                    },
-                    h1: ({node, ...props}) => <h1 className="text-3xl font-bold mb-4 mt-6 border-b-4 border-black inline-block" {...props} />,
-                    h2: ({node, ...props}) => <h2 className="text-2xl font-bold mb-3 mt-5 text-purple-600" {...props} />,
-                    p: ({node, ...props}) => <p className="mb-4 text-gray-800" {...props} />,
-                    ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-4 space-y-2" {...props} />,
-                    a: ({node, ...props}) => <a className="text-blue-600 font-bold hover:underline decoration-2" target="_blank" {...props} />,
-                    img: ({node, ...props}) => <img className="w-full rounded-lg border-2 border-black my-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" {...props} />,
-                  }}
-                >
-                  {block.content || '*Chưa có nội dung...*'}
-                </ReactMarkdown>
+            // Nếu không -> Hiện Markdown bình thường
+            <>
+              <ReactMarkdown
+                components={{
+                  code({ node, inline, className, children, ...props }: any) {
+                    const match = /language-(\w+)/.exec(className || '')
+                    return !inline && match ? (
+                      <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div" {...props}>
+                        {String(children).replace(/\n$/, '')}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className={`${className} bg-gray-200 px-1 rounded text-red-500 font-mono`} {...props}>
+                        {children}
+                      </code>
+                    )
+                  },
+                  h1: ({ node, ...props }) => <h1 className="text-3xl font-bold mb-4 mt-6 border-b-4 border-black inline-block" {...props} />,
+                  h2: ({ node, ...props }) => <h2 className="text-2xl font-bold mb-3 mt-5 text-purple-600" {...props} />,
+                  p: ({ node, ...props }) => <p className="mb-4 text-gray-800" {...props} />,
+                  ul: ({ node, ...props }) => <ul className="list-disc pl-5 mb-4 space-y-2" {...props} />,
+                  a: ({ node, ...props }) => <a className="text-blue-600 font-bold hover:underline decoration-2" target="_blank" {...props} />,
+                  img: ({ node, ...props }) => <img className="w-full rounded-lg border-2 border-black my-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" {...props} />,
+                }}
+              >
+                {block.content || '*Chưa có nội dung...*'}
+              </ReactMarkdown>
 
-                {block.link && (
-                  <div className="mt-8 pt-4 border-t-2 border-dashed border-gray-400">
-                    <a href={block.link} target="_blank" className="inline-block bg-black text-white font-bold py-3 px-6 rounded hover:shadow-[4px_4px_0px_0px_rgba(100,100,100,1)] transition-all">
-                      🔗 Xem Link
-                    </a>
-                  </div>
-                )}
-             </>
+              {block.link && (
+                <div className="mt-8 pt-4 border-t-2 border-dashed border-gray-400">
+                  <a href={block.link} target="_blank" className="inline-block bg-black text-white font-bold py-3 px-6 rounded hover:shadow-[4px_4px_0px_0px_rgba(100,100,100,1)] transition-all">
+                    🔗 Xem Link
+                  </a>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

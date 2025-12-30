@@ -32,7 +32,7 @@ export default function HomePage({ data }: PortfolioProps) {
 
                         <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9]">
                             Code Like A <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Madness</span>
+                            <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-pink-600">Madness</span>
                         </h1>
 
                         <p className="text-lg md:text-xl font-medium text-gray-700 max-w-md border-l-4 border-black pl-4">

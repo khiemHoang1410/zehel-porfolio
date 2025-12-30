@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react';
-import FloatingDock from '../../../shared/components/ui/FloatingDock';
+import FloatingDock from '../../../shared/components/floating_dock/FloatingDock';
 import Timeline from '../../../shared/components/ui/Timeline';
 import PageTransition from '../../../shared/components/ui/PageTransition';
 
