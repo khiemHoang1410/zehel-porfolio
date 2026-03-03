@@ -11,6 +11,8 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noImplicitAny": true, // Cấm dùng 'any' bừa bãi
+    "strictNullChecks": true, // Kiểm tra null/undefined cực kỳ gắt gao
     "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
