@@ -1,15 +1,14 @@
 // src/app/(public)/projects/page.tsx
-import ProjectForm from '@/modules/admin/components/projects/ProjectForm';
-import ProjectList from '@/modules/admin/components/projects/ProjectList';
-import connectDB from '@/shared/lib/db'; // 1. Import kết nối DB
-import Block from '@/modules/core/models/Block'; // 2. Import Model Block
+import ProjectForm from "@/modules/projects/components/ProjectForm";
+import ProjectList from "@/modules/projects/ProjectList";
+import connectDB from "@/shared/lib/db"; // 1. Import kết nối DB
+import Block from "@/modules/core/models/Block"; // 2. Import Model Block
 
 // Hàm này để biến đổi ObjectId và Date thành string cho Client Component đỡ lỗi
 const serialize = (data: any) => JSON.parse(JSON.stringify(data));
 
 // 3. Thêm async để fetch data server-side
 export default async function AdminProjectsPage() {
-
   // 4. Gọi dữ liệu từ MongoDB
   await connectDB();
   const blocks = await Block.find({}).sort({ createdAt: -1 }).lean();

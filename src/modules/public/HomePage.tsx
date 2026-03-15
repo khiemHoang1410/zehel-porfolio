@@ -6,7 +6,7 @@ import { Terminal, ArrowRight, Zap } from "lucide-react";
 import Marquee from "./components/Marquee";
 import BentoGrid from "./components/bento/BentoGrid";
 import PageTransition from "@/shared/components/ui/PageTransition";
-import TechArsenal from "./components/tech/TechArsenal"; // Import cái mới xịn xò
+import TechArsenal from "../tech-stack/components/TechArsenal"; // Import cái mới xịn xò
 import NeoButton from "@/shared/components/ui/NeoButton";
 
 interface PortfolioProps {

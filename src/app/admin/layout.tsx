@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 // 👇 Import từ MODULES thay vì _components
-import AdminSidebar from "@/modules/admin/components/layout/side_bar/AdminSidebar";
-import AdminHeader from "@/modules/admin/components/layout/side_bar/AdminHeader";
+import AdminSidebar from "@/modules/admin-shared/side_bar/AdminSidebar";
+import AdminHeader from "@/modules/admin-shared/side_bar/AdminHeader";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   try {
