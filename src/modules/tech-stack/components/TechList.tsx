@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteTechAction } from "@/modules/admin/actions";
+import { deleteTechAction } from "@/modules/tech-stack/actions";
 import { Trash2, Copy, Star, Pencil } from "lucide-react";
 import { useTransition } from "react";
 import { toast } from "sonner";

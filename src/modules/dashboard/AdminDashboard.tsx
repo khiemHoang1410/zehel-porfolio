@@ -4,13 +4,13 @@
 import { useSearchParams } from "next/navigation";
 import { LayoutDashboard, Mail, Cpu, Briefcase, Home } from "lucide-react";
 
-import ProjectManager from "../../../projects/ProjectManager";
+import ProjectManager from "@/modules/projects/components/ProjectManager";
 import DashboardOverview from "./DashboardOverview";
-import InboxManager from "../mails/InboxManager";
+import InboxManager from "@/modules/inbox/components/InboxManager";
 
 import { IBlock } from "@/modules/core/dtos/block.dto";
 import { ITech } from "@/modules/tech-stack/tech.dto";
-import TechsManager from "../techs/TechsManager";
+import TechsManager from "@/modules/tech-stack/components/TechsManager";
 
 interface DashboardProps {
   initialBlocks?: IBlock[];

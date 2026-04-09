@@ -1,6 +1,6 @@
 // src/app/(public)/projects/page.tsx
 import ProjectForm from "@/modules/projects/components/ProjectForm";
-import ProjectList from "@/modules/projects/ProjectList";
+import ProjectList from "@/modules/projects/components/ProjectList";
 import connectDB from "@/shared/lib/db"; // 1. Import kết nối DB
 import Block from "@/modules/core/models/Block"; // 2. Import Model Block
 
