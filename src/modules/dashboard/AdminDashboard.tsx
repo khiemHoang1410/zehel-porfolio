@@ -7,6 +7,7 @@ import { LayoutDashboard, Mail, Cpu, Briefcase, Home } from "lucide-react";
 import ProjectManager from "@/modules/projects/components/ProjectManager";
 import DashboardOverview from "./DashboardOverview";
 import InboxManager from "@/modules/inbox/components/InboxManager";
+import ExperienceManager from "@/modules/experiences/components/ExperienceManager";
 
 import { IBlock } from "@/modules/core/dtos/block.dto";
 import { ITech } from "@/modules/tech-stack/tech.dto";
@@ -14,13 +15,14 @@ import TechsManager from "@/modules/tech-stack/components/TechsManager";
 
 interface DashboardProps {
   initialBlocks?: IBlock[];
-  initialTechs?: ITech[]; // 👈 Định nghĩa kiểu dữ liệu ở đây
+  initialTechs?: ITech[];
   initialMessages?: any[];
-  // Thêm props stats
+  initialExperiences?: any[];
   stats: {
     totalBlocks: number;
     totalTechs: number;
     totalMessages: number;
+    totalExperiences: number;
   };
 }
 
@@ -28,6 +30,7 @@ export default function AdminDashboard({
   initialBlocks = [],
   initialTechs = [],
   initialMessages = [],
+  initialExperiences = [],
   stats,
 }: DashboardProps) {
   const searchParams = useSearchParams();
@@ -86,6 +89,10 @@ export default function AdminDashboard({
           <div className="p-10 border-4 border-dashed border-gray-300 text-center text-gray-400 rounded-xl">
             <InboxManager messages={initialMessages} />
           </div>
+        )}
+
+        {currentTab === "experience" && (
+          <ExperienceManager initialData={initialExperiences} />
         )}
       </div>
     </div>
