@@ -29,8 +29,7 @@ export default function ExperienceList({ data }: { data: IExpItem[] }) {
         });
     };
 
-    if (!data || data.length === 0) {
-        return (
+    if (!data || data.length === 0) {        return (
             <div className="flex flex-col items-center justify-center h-64 border-2 border-black border-dashed bg-yellow-50/50">
                 <Briefcase size={40} className="mb-3 text-black opacity-20" />
                 <p className="text-sm font-bold uppercase text-gray-500">Chưa có kinh nghiệm nào</p>
@@ -40,7 +39,7 @@ export default function ExperienceList({ data }: { data: IExpItem[] }) {
     }
 
     return (
-        <div className="space-y-4 max-h-[calc(100vh-150px)] overflow-y-auto pb-10 pr-2">
+        <div className="space-y-4 max-h-[calc(100vh-200px)] overflow-y-auto pb-10 pr-2">
             {/* Header */}
             <div className="flex justify-between items-center sticky top-0 bg-white/95 backdrop-blur z-10 py-3 border-b-2 border-black mb-2">
                 <h4 className="font-black text-black text-sm uppercase tracking-wider flex items-center gap-2">

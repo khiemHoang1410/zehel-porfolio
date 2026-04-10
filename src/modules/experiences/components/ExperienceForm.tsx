@@ -17,15 +17,6 @@ export default function ExperienceForm({ onSuccess }: ExperienceFormProps) {
         const form = e.currentTarget;
         const formData = new FormData(form);
 
-        const title = formData.get('title') as string;
-        const company = formData.get('company') as string;
-        const year = formData.get('year') as string;
-
-        if (!title.trim() || !company.trim() || !year.trim()) {
-            toast.error('Vui lòng điền đầy đủ các trường bắt buộc!');
-            return;
-        }
-
         setIsPending(true);
         const res = await createExpAction(formData);
         setIsPending(false);
