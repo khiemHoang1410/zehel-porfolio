@@ -9,7 +9,7 @@ import {
   TECH_LEVELS,
   ITech,
 } from "@/modules/tech-stack/tech.dto";
-import { createTechAction, updateTechAction } from "@/modules/admin/actions";
+import { createTechAction, updateTechAction } from "@/modules/tech-stack/actions";
 import { toast } from "sonner";
 import {
   Loader2,

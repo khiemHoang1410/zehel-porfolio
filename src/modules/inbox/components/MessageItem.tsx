@@ -4,7 +4,7 @@
 import { useState, useTransition } from 'react';
 import { Trash2, MailOpen, Mail, Clock, User, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { deleteMessageAction, toggleMessageReadStatusAction } from '@/modules/admin/actions';
+import { deleteMessageAction, toggleMessageReadStatusAction } from '@/modules/inbox/actions';
 
 interface MessageItemProps {
     msg: any; // Dùng IMessage nếu có type chuẩn

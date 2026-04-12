@@ -4,7 +4,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CreateBlockSchema, CreateBlockDTO } from '@/modules/core/dtos/block.dto';
-import { createBlockAction } from '@/modules/admin/actions';
+import { createBlockAction } from '@/modules/projects/actions';
 import { toast } from 'sonner';
 import { Loader2, Plus, Save, Link as LinkIcon, Image as ImageIcon } from 'lucide-react'; // Thêm icon cho đẹp
 import { useState } from 'react';

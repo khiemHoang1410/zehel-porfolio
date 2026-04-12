@@ -2,7 +2,7 @@
 'use client';
 
 import { Trash2, ExternalLink, Box, GripVertical, Loader2 } from 'lucide-react';
-import { deleteBlockAction } from '@/modules/admin/actions';
+import { deleteBlockAction } from '@/modules/projects/actions';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
 import { IBlock } from '@/modules/core/dtos/block.dto'; // Import đúng DTO

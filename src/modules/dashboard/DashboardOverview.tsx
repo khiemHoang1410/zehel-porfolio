@@ -1,7 +1,7 @@
 // src/modules/admin/components/dashboard/DashboardOverview.tsx
 'use client';
 
-import { Box, Code2, Mail, ArrowUpRight, Plus, Activity } from 'lucide-react';
+import { Box, Code2, Mail, ArrowUpRight, Plus, Activity, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 import { IBlock } from '@/modules/core/dtos/block.dto';
 
@@ -10,8 +10,9 @@ interface OverviewProps {
         totalBlocks: number;
         totalTechs: number;
         totalMessages: number;
+        totalExperiences: number;
     };
-    recentMessages: any[]; // Thay any bằng IMessage nếu có
+    recentMessages: any[];
     recentBlocks: IBlock[];
 }
 
@@ -39,7 +40,7 @@ export default function  DashboardOverview({ stats, recentMessages, recentBlocks
             </div>
 
             {/* 2. STATS CARDS (Neo-Brutalism Style) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {/* Card 1: Blocks */}
                 <div className="bg-yellow-300 border-2 border-black p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-transform">
                     <div className="flex justify-between items-start mb-4">
@@ -74,6 +75,18 @@ export default function  DashboardOverview({ stats, recentMessages, recentBlocks
                     </div>
                     <div className="text-5xl font-black mb-1">{stats.totalTechs}</div>
                     <div className="text-sm font-bold opacity-70">Công nghệ đã học</div>
+                </div>
+
+                {/* Card 4: Experiences */}
+                <div className="bg-green-300 border-2 border-black p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-transform">
+                    <div className="flex justify-between items-start mb-4">
+                        <div className="p-3 bg-black text-white rounded-lg">
+                            <Briefcase size={24} />
+                        </div>
+                        <span className="text-xs font-black uppercase border border-black px-2 py-1 bg-white">Career</span>
+                    </div>
+                    <div className="text-5xl font-black mb-1">{stats.totalExperiences}</div>
+                    <div className="text-sm font-bold opacity-70">Kinh nghiệm làm việc</div>
                 </div>
             </div>
 
@@ -129,6 +142,10 @@ export default function  DashboardOverview({ stats, recentMessages, recentBlocks
                             </Link>
                             <Link href="/admin?tab=techs" className="flex items-center justify-between p-3 bg-zinc-100 hover:bg-purple-300 hover:text-black hover:border-black border border-transparent transition-all font-bold group">
                                 <span className="flex items-center gap-2"><Plus size={16} /> Thêm Tech Stack</span>
+                                <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </Link>
+                            <Link href="/admin?tab=experience" className="flex items-center justify-between p-3 bg-zinc-100 hover:bg-green-300 hover:text-black hover:border-black border border-transparent transition-all font-bold group">
+                                <span className="flex items-center gap-2"><Plus size={16} /> Thêm Kinh Nghiệm</span>
                                 <ArrowUpRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                             </Link>
                         </div>

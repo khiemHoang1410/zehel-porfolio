@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react';
 import { Trash2, Loader2 } from 'lucide-react';
-import { deleteBlockAction } from '@/modules/admin/actions';
+import { deleteBlockAction } from '@/modules/projects/actions';
 
 export default function DeleteButton({ id }: { id: string }) {
 
